@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>three</title>
+</head>
+<body>
+ 
+<script src="three.js"></script>
+<script src="OrbitControls.js"></script>
+<script>
+
+  //パラメーターの設定
+  var width  = 600;
+  var height = 400;
+  var fov    = 60;
+  var aspect = width / height;
+  var near   = 1;
+  var far    = 1000;
+
+  //シーンの生成
+  var scene = new THREE.Scene();
+
+  //カメラの生成
+  var camera = new THREE.PerspectiveCamera( fov, aspect, near, far );
+  camera.position.set( 0, 0, 50 );
+
+  //レンダーの設定
+  var renderer = new THREE.WebGLRenderer();
+  renderer.setSize( width, height );
+  document.body.appendChild( renderer.domElement );
+
+  //マウスを取得する
+  var controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+  //光源の設定
+  var directionalLight = new THREE.DirectionalLight( 0xffffff );
+  directionalLight.position.set( 0, 100, 10 );
+  scene.add( directionalLight );
+
+  //形と大きさ
+  var geometry = new THREE.CylinderGeometry(0,20,40,50);
+
+  //素材と色
+  var material = new THREE.MeshPhongMaterial( { color: 0xff0000 } );
+
+  //オブジェクトを作る
+  var mesh = new THREE.Mesh( geometry, material );
+
+  //シーンに貼り付け
+  scene.add( mesh );
+
+  var main = function mainLoop () {
+
+    //更新処理
+
+
+    //描画する
+    renderer.render( scene, camera );
+
+    //自身を再実行する
+    requestAnimationFrame( mainLoop );
+  };
+ 
+window.addEventListener( 'DOMContentLoaded', main, false );
+</script>
+ 
+</body>
+</html>
